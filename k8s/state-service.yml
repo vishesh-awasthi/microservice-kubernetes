@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: state-service
+spec:
+  selector:
+    run: state-service
+  ports:
+    - name: port1
+      protocol: TCP
+      port: 8081
+      targetPort: 8081
+  type: NodePort

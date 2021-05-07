@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: country-service
+  labels:
+    run: country-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: country-service
+    spec:
+      containers:
+        - name: country-service
+          image: visheshawasthi/country-service
+          ports:
+            - containerPort: 8080
+              protocol: TCP

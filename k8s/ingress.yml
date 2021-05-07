@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gateway
+spec:
+  backend:
+    serviceName: http-backend
+    servicePort: 80
+  rules:
+    - host: micro.all
+      http:
+        paths:
+          - path: /country-service
+            backend:
+              serviceName: country-service
+              servicePort: 8080
+          - path: /state-service
+            backend:
+              serviceName: state-service
+              servicePort: 8081

@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: state-service
+  labels:
+    run: state-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: state-service
+    spec:
+      containers:
+        - name: state-service
+          image: visheshawasthi/state-service
+          ports:
+            - containerPort: 8080
+              protocol: TCP
