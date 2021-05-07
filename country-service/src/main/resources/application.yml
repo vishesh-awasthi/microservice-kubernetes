@@ -1,0 +1,8 @@
+server:
+    port: 8080
+    servlet:
+        context-path: /country-service
+
+client:
+    state:
+        url: http://localhost:8081/state-service/api/v1/states?code=
