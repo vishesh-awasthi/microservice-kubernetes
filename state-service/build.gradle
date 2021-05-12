@@ -5,6 +5,7 @@ plugins {
     id 'com.google.cloud.tools.jib' version '2.8.0'
 }
 
+jib.from.image= 'adoptopenjdk/openjdk15:alpine-jre'
 jib.to.image= 'visheshawasthi/state-service'
 
 group = 'com.visheshawasthi'
