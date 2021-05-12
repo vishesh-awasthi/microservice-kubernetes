@@ -5,4 +5,4 @@ server:
 
 client:
     state:
-        url: http://localhost:8081/state-service/api/v1/states?code=
+        url: http://${STATE_SERVICE_HOST:localhost:8081}/state-service/api/v1/states?code=
