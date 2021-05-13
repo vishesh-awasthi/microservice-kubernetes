@@ -13,3 +13,10 @@ spec:
                 name: country-service
                 port:
                   number: 8080
+          - path: /state-service
+            pathType: Prefix
+            backend:
+              service:
+                name: state-service
+                port:
+                  number: 8081
