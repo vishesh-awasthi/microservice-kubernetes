@@ -28,11 +28,11 @@ spec:
           env:
             - name: STATE_SERVICE_HOST
               valueFrom:
-                configKeyMapRef:
+                configMapKeyRef:
                   name: country-config
                   key: state-service-host
             - name: CONTEXT-PATH
               valueFrom:
-                configKeyMapRef:
+                configMapKeyRef:
                   name: country-config
                   key: context-path

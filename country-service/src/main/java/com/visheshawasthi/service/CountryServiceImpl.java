@@ -1,24 +1,20 @@
 package com.visheshawasthi.service;
 
-import com.visheshawasthi.client.StateClient;
+import com.visheshawasthi.client.feign.StateClientInterface;
 import com.visheshawasthi.exception.CountryNotFoundException;
 import com.visheshawasthi.model.Country;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 public class CountryServiceImpl implements CountryService {
 
-    @Autowired
-    private StateClient stateClient;
+    private StateClientInterface stateClientInterface;
 
     private List<Country> getCountryList() {
         return List.of(
@@ -79,7 +75,7 @@ public class CountryServiceImpl implements CountryService {
             .findFirst()
             .orElseThrow(() -> new CountryNotFoundException("Country not found with name :" + alphaCode3));
         if (statesIncluded) {
-            country.setStates(stateClient.getStates(alphaCode3.toUpperCase(Locale.ROOT)));
+            country.setStates(stateClientInterface.getStates(alphaCode3.toUpperCase(Locale.ROOT)).getBody());
         }
         return country;
     }

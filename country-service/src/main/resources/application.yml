@@ -1,14 +1,10 @@
 server:
-    port: ${PORT:8080}
-    servlet:
-        context-path: ${CONTEXT-PATH:/country-service}
-
-client:
-    state:
-        url: http://${STATE_SERVICE_HOST:localhost:8081}/state-service/api/v1/states?code=
+  port: ${PORT:8080}
+  servlet:
+    context-path: ${CONTEXT-PATH:/country-service}
 
 management:
-    endpoints:
-        web:
-            exposure:
-                include: '*'
+  endpoints:
+    web:
+      exposure:
+        include: '*'
