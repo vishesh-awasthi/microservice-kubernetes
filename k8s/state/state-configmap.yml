@@ -1,0 +1,8 @@
+# Config map for state-service
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: state-config
+data:
+  context-path: "/state-service"
+  port: "8081"

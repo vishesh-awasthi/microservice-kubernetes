@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: state-service-deployment
+  labels:
+    run: state-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: state-service
+  template:
+    metadata:
+      labels:
+        run: state-service
+    spec:
+      volumes:
+        - name: config-volume
+          configMap:
+            name: state-config
+      containers:
+        - name: state-service
+          image: visheshawasthi/state-service
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8081
+              protocol: TCP
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: state-config
+                  key: port
+            - name: CONTEXT-PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: state-config
+                  key: context-path

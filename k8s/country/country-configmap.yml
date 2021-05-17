@@ -1,0 +1,9 @@
+# Config map for country-service
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: country-config
+data:
+  context-path: "/country-service"
+  port: "8081"
+  state-service-host: "state-service"
