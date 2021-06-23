@@ -6,7 +6,7 @@ plugins {
 }
 
 jib.from.image= 'adoptopenjdk/openjdk15:alpine-jre'
-jib.to.image= 'visheshawasthi/country-service'
+jib.to.image= 'visheshawasthi/country-service:dev'
 
 group = 'com.visheshawasthi'
 version = '0.0.1-SNAPSHOT'

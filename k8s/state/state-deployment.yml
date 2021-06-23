@@ -20,7 +20,7 @@ spec:
             name: state-config
       containers:
         - name: state-service
-          image: visheshawasthi/state-service
+          image: visheshawasthi/state-service:dev
           imagePullPolicy: Always
           ports:
             - containerPort: 8081
