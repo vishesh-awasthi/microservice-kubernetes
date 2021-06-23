@@ -1,5 +1,6 @@
 package com.visheshawasthi.controller;
 
+import com.visheshawasthi.model.State;
 import com.visheshawasthi.model.CountryCode;
 import com.visheshawasthi.service.StateService;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/states")
@@ -18,7 +21,7 @@ public class StateController {
     private final StateService stateService;
 
     @GetMapping
-    public ResponseEntity getStatesByCountryCode(@RequestParam("code") CountryCode alpha3Code) {
-        return new ResponseEntity(stateService.getStatesByCountry(alpha3Code), HttpStatus.OK);
+    public ResponseEntity<List<State>> getStatesByCountryCode(@RequestParam("code") CountryCode alpha3Code) {
+        return new ResponseEntity<>(stateService.getStatesByCountry(alpha3Code), HttpStatus.OK);
     }
 }
