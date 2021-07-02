@@ -11,7 +11,7 @@ data:
   port: "8081"
   state-service-host: "state-service"
 ---
-# Deployment for state-service
+# Deployment for country-service
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -80,11 +80,10 @@ spec:
   selector:
     run: country-service
   ports:
-    - name: port1
+    - name: http
       protocol: TCP
       port: 8080
       targetPort: 8080
-  type: NodePort
 ---
 # Config map for state-service
 kind: ConfigMap
@@ -169,8 +168,7 @@ spec:
   selector:
     run: state-service
   ports:
-    - name: port1
+    - name: http
       protocol: TCP
       port: 8081
       targetPort: 8081
-  type: NodePort
