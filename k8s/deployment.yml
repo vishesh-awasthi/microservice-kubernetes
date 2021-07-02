@@ -131,7 +131,7 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 4040
+              port: 4041
             initialDelaySeconds: 30
             periodSeconds: 5
           ### Readiness ###
