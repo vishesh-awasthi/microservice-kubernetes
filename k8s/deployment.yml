@@ -1,0 +1,176 @@
+# Config map for country-service
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: country-config
+  labels:
+    env: development
+    owner: VisheshAwasthi
+data:
+  context-path: "/country-service"
+  port: "8081"
+  state-service-host: "state-service"
+---
+# Deployment for state-service
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: country-service-deployment
+  labels:
+    run: country-service
+    env: development
+    owner: VisheshAwasthi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: country-service
+  template:
+    metadata:
+      labels:
+        run: country-service
+    spec:
+      volumes:
+        - name: config-volume
+          configMap:
+            name: country-config
+      containers:
+        - name: country-service
+          image: visheshawasthi/country-service:dev
+          imagePullPolicy: Always
+          ### Liveness ###
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 4040
+            initialDelaySeconds: 30
+            periodSeconds: 5
+          ### Readiness ###
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /actuator/health/readiness
+              port: 4040
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: STATE_SERVICE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: country-config
+                  key: state-service-host
+            - name: CONTEXT-PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: country-config
+                  key: context-path
+---
+# Service for country-service
+kind: Service
+apiVersion: v1
+metadata:
+  name: country-service
+  labels:
+    env: development
+    owner: VisheshAwasthi
+spec:
+  selector:
+    run: country-service
+  ports:
+    - name: port1
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: NodePort
+---
+# Config map for state-service
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: state-config
+  labels:
+    env: development
+    owner: VisheshAwasthi
+data:
+  context-path: "/state-service"
+  port: "8081"
+---
+# Deployment for state-service
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: state-service-deployment
+  labels:
+    run: state-service
+    env: development
+    owner: VisheshAwasthi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: state-service
+  template:
+    metadata:
+      labels:
+        run: state-service
+        env: development
+        owner: VisheshAwasthi
+    spec:
+      volumes:
+        - name: config-volume
+          configMap:
+            name: state-config
+      containers:
+        - name: state-service
+          image: visheshawasthi/state-service:dev
+          imagePullPolicy: Always
+          ### Liveness ###
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 4040
+            initialDelaySeconds: 30
+            periodSeconds: 5
+          ### Readiness ###
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /actuator/health/readiness
+              port: 4041
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          ports:
+            - containerPort: 8081
+              protocol: TCP
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: state-config
+                  key: port
+            - name: CONTEXT-PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: state-config
+                  key: context-path
+---
+# Service for state-service
+kind: Service
+apiVersion: v1
+metadata:
+  name: state-service
+  labels:
+    env: development
+    owner: VisheshAwasthi
+spec:
+  selector:
+    run: state-service
+  ports:
+    - name: port1
+      protocol: TCP
+      port: 8081
+      targetPort: 8081
+  type: NodePort
